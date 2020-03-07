@@ -10,13 +10,9 @@
 #define INF 500000000
 #define maxN 1000001
 using namespace std;
-
-
 //arrays of my tools
 ll primes[maxN];
 ll factors[maxN];
-
-
 //sieve
 bool bs[maxN];
 int size_primes;
@@ -31,8 +27,6 @@ void sieve(){
     primes[size_primes++] = 2;
     for(ll i = 3;i < maxN;i += 2) if(bs[i])    primes[size_primes++] = i;
 }
-
-
 ll size_fac = 0;
 void primeFactors(ll n){
     ll ind = 0;
@@ -48,8 +42,6 @@ void primeFactors(ll n){
         factors[size_fac++] = temp;
     }
 }
-
-
 ll numDiffPF(ll n){
     ll ind = 0, temp = primes[ind],ans = 0;
     while(temp*temp <= n){
@@ -60,8 +52,6 @@ ll numDiffPF(ll n){
     if(n != 1)ans++;
     return ans;
 }
-
-
 ll numDiv(ll n){
     ll ind = 0,temp = primes[ind],ans = 1;
     while(temp*temp <= n){
@@ -76,8 +66,6 @@ ll numDiv(ll n){
     if(n != 1) ans *= 2;
     return ans;
 }
-
-
 ll EulerPhi(ll N){
     ll PF_idx = 0, PF = primes[PF_idx], ans = N;
 
@@ -96,15 +84,12 @@ ll EulerPhi(ll N){
 
     return ans;
 }
-
 bool isPrime(ll N){
     if (N <= _sieve_size) return bs[N];
     for (int i = 0; i < (int)primes.size(); i++)
         if (N % primes[i] == 0) return false;
     return true;
 }
-
-
 //dividing large number
 bool cheak(string s,long long d){
     string ts="";
@@ -131,8 +116,6 @@ bool cheak(string s,long long d){
     if(dif != 0) return false;
     else return true;
 }
-
-
 // here is some of big integer related code
 //mod of large exponent
 template <class T>
@@ -144,8 +127,6 @@ T bigmod(T b,T p,T m){
         return (t * t) % m;
     }
 }
-
-
 template <class T>
 T gcd(T a, T b, T & x, T & y) {
     if (a == 0) {
@@ -159,3 +140,36 @@ T gcd(T a, T b, T & x, T & y) {
     y = x1;
     return d;
 }
+// some of the graph theory Template
+// finding bridge in a graph
+int graph[100][100];
+int visit[100];
+int depth[100];
+int cutBridge[100][100];
+int n;
+int findBridge(int node, int d, int parent){
+    depth[node] = d;
+    int back = 1000;
+    for(int i = 0;i < n;i++){
+        if(graph[node][i] == 1){
+            if(visit[i] == 0){
+                visit[i] = 1;
+                int temp = findBridge(i, d+1, node);
+                if(temp > d){
+                    cutBridge[node][i] = 1;
+                    cutBridge[i][node] = 1;
+                }
+                back = min(back, temp);
+            } else{
+                if(parent != i){
+                    back = min(back, depth[i]);
+                }
+            }
+        }
+    }
+    return back;
+}
+memset(graph,0,sizeof(graph));            //
+memset(visit,0,sizeof visit);           // in main function
+memset(depth,0,sizeof depth);           //
+memset(cutBridge,0,sizeof cutBridge); //
