@@ -10,6 +10,27 @@
 #define INF 500000000
 #define maxN 1000001
 using namespace std;
+bool primes[100000]={false};
+void sieve(){
+    primes[0]=primes[1]=true;
+    int i,j;
+    for(int i=2;i<100000;i++){
+        if(primes[i]==false){
+            for(int j=2;i*j<100000;j++)
+                primes[i*j]=true;
+        }
+    }
+}
+
+long long powmod(long long x,long long y,long long mod){
+    int res=1;x%=mod;if(x==0)return 0;
+    while(y>0){
+        if(y&1)res=(res*x)%mod;y>>=1;
+        x=(x*x)%mod;
+    }
+    return res;
+}
+
 //arrays of my tools
 ll primes[maxN];
 ll factors[maxN];

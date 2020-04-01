@@ -32,8 +32,8 @@ void dfs(int node, int parent = -1){
 
 
 int main() {
-         freopen("input.txt","r",stdin);
-     freopen("output.txt","w",stdout);
+    //      freopen("input.txt","r",stdin);
+    //  freopen("output.txt","w",stdout);
     int n,kse = 0;
     while(cin >> n && n){
         if(kse != 0)cout << endl;
